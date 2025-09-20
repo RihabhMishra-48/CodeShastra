@@ -69,6 +69,11 @@ export const navigation = [
     url: "#login",
     onlyMobile: true,
   },
+  {
+    id: "6",
+    title: "Quiz",       // ✅ नया Quiz option
+    url: "/quiz",        // ✅ React Router route
+  },
 ];
 
 export const heroIcons = [homeSmile, file02, searchMd, plusSquare];
