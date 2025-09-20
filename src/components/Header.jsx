@@ -91,7 +91,7 @@ const Header = () => {
         </SignUpButton>
 
         <SignInButton>
-          <Button className="hidden lg:flex">Sign in</Button>
+          <Button className="hidden ml-auto lg:flex">Sign in</Button>
         </SignInButton>
 
         {/* Mobile Hamburger */}
