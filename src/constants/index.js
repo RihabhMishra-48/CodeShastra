@@ -91,7 +91,7 @@ export const roadmap = [
     text: "Discover how hackathons really work — from team dynamics to final pitches. Demystifying hackathons so you can compete with clarity and confidence.",
     date: "JULY 2025",
     status: "done",
-    imageUrl: "https://youtu.be/OsGMEcvBvf8?si=RdEarl5csweCTtfJ",
+    imageUrl: roadmap1,
     colorful: true,
   },
   {
@@ -100,7 +100,7 @@ export const roadmap = [
     text: "Master problem-solving skills with Python and sharpen your edge for coding contests.",
     date: "aug 2025",
     status: "progress",
-    imageUrl: "https://youtu.be/OsOoMp9hJAE?si=yWzF0QdVt0Fjl46y",
+    imageUrl: ,roadmap2
   },
   {
     id: "2",
@@ -108,7 +108,7 @@ export const roadmap = [
     text: "Learn how to manage code, collaborate with teams, and contribute to open source using GitHub.",
     date: "june 2025",
     status: "done",
-    imageUrl: "https://youtu.be/J-__saRRd2U?si=EKkwpuDx5NZ4t40X",
+    imageUrl: roadmap3,
   },
   {
     id: "3",
@@ -116,7 +116,7 @@ export const roadmap = [
     text: "Sharpen your problem-solving and get contest-ready with hands-on Java practice.",
     date: "AUG 2025",
     status: "progress",
-    imageUrl:"https://youtu.be/cFJ1qA7IIwQ?si=epWb3B31fU8yEI3_",
+    imageUrl:roadmap4,
     colorful: true,
     
   },
