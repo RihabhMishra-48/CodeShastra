@@ -100,7 +100,7 @@ export const roadmap = [
     text: "Master problem-solving skills with Python and sharpen your edge for coding contests.",
     date: "aug 2025",
     status: "progress",
-    imageUrl: ,roadmap2
+    imageUrl: roadmap2,
   },
   {
     id: "2",
