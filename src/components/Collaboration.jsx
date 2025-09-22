@@ -3,6 +3,7 @@ import { collabApps, collabContent, collabText } from "../constants";
 import Button from "./Button";
 import Section from "./Section";
 import { LeftCurve, RightCurve } from "./design/Collaboration";
+import { SignInButton, SignUpButton } from "@clerk/clerk-react";
 
 const Collaboration = () => {
   return (
@@ -26,8 +27,9 @@ const Collaboration = () => {
               </li>
             ))}
           </ul>
-
-          <Button>Join us Now</Button>
+            <SignInButton>
+          <Button>Join us Now</Button> 
+        </SignInButton>
         </div>
 
         <div className="lg:ml-auto xl:w-[38rem] mt-4">
