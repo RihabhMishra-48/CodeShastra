@@ -93,6 +93,7 @@ export const roadmap = [
     status: "done",
     imageUrl: roadmap1,
     colorful: true,
+     link: "https://youtu.be/OsGMEcvBvf8?si=PvogKYB0FgqQnhcy",
   },
   {
     id: "1",
@@ -101,6 +102,7 @@ export const roadmap = [
     date: "aug 2025",
     status: "progress",
     imageUrl: roadmap2,
+    link: "https://youtu.be/OsOoMp9hJAE?si=CWvGF79ll8HRspuY",
   },
   {
     id: "2",
@@ -109,6 +111,7 @@ export const roadmap = [
     date: "june 2025",
     status: "done",
     imageUrl: roadmap3,
+    link: "https://youtu.be/nfzEBlYWsgI?si=bxMolb4AGMoGDNNc",
   },
   {
     id: "3",
@@ -118,7 +121,7 @@ export const roadmap = [
     status: "progress",
     imageUrl:roadmap4,
     colorful: true,
-    
+    link: "https://youtu.be/cFJ1qA7IIwQ?si=9B9Fi5bgMORAlbfr",    
   },
 ];
 
