@@ -1,45 +1,31 @@
 import React, { useState } from "react";
+import Header from "../components/Header";
 
 const TalentineDay = () => {
   const [type, setType] = useState("individual");
   const [teamSize, setTeamSize] = useState(2);
 
   return (
-    <div className="page">
-      <nav className="navbar">
-        <div className="logo">📘 CodeShastra</div>
-        <div className="nav-actions">
-          <button className="outline">Register</button>
-          <button className="outline">Sign In</button>
-        </div>
-      </nav>
+     <div className="pt-[4.75rem] lg:pt-[5.25rem] overflow-hidden">
+      <Header />
 
-     <section className="hero">
+    <section className="hero">
   <h1 className="hero-title">
-    Discover New Horizons in <br />
-    <span>Tech with CodeShastra</span>
+    Talentine Day <br />
+    <span>Online Hackathon</span>
   </h1>
 
   <p className="hero-subtitle">
-    Talentine Day — Online Hackathon
-  </p>
-
-  <p className="hero-desc">
     Tech Treasure Hunt <span>×</span> Prompt Engineering Challenge
   </p>
 
   <div className="stats">
-    <div className="stat-card">
-      🌐 <span>Online Event</span>
-    </div>
-    <div className="stat-card">
-      🏆 <span>₹15,000 Prize Pool</span>
-    </div>
-    <div className="stat-card">
-      💸 <span>No Registration Fee</span>
-    </div>
+    <div className="stat-card">🌐 <span>Online Event</span></div>
+    <div className="stat-card">🏆 <span>₹15,000 Prize Pool</span></div>
+    <div className="stat-card">💸 <span>No Registration Fee</span></div>
   </div>
 </section>
+
 
 
       <section className="card neon">
