@@ -59,8 +59,8 @@ export const navigation = [
   },
   {
     id: "4",
-    title: "Quiz",       
-    url: "/quiz",        
+    title: "TalentineDay",       
+    url: "/talentine",        
   },
 ];
 
