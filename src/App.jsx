@@ -9,7 +9,7 @@ import Hero from "./components/Hero";
 import Pricing from "./components/Pricing";
 import Roadmap from "./components/Roadmap";
 import Services from "./components/Services";
-import TalentineDay from "./pages/talentine";   // 👈 Quiz page import
+import TalentineDay from "./pages/talentine"; // ✅ correct import
 
 // Home Page component
 const Home = () => {
@@ -31,8 +31,8 @@ const App = () => {
   return (
     <>
       <Routes>
-        <Route path="/" element={<Home />} />        {/* 👈 Default home */}
-        <Route path="/talentine" element={<talentine />} />    {/* 👈 Quiz route */}
+        <Route path="/" element={<Home />} />
+        <Route path="/talentine" element={<TalentineDay />} /> {/* ✅ FIX */}
       </Routes>
       <ButtonGradient />
     </>
