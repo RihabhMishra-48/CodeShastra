@@ -9,7 +9,7 @@ import Hero from "./components/Hero";
 import Pricing from "./components/Pricing";
 import Roadmap from "./components/Roadmap";
 import Services from "./components/Services";
-import Quiz from "./pages/Quiz";   // 👈 Quiz page import
+import TalentineDay from "./pages/talentine";   // 👈 Quiz page import
 
 // Home Page component
 const Home = () => {
@@ -32,7 +32,7 @@ const App = () => {
     <>
       <Routes>
         <Route path="/" element={<Home />} />        {/* 👈 Default home */}
-        <Route path="/quiz" element={<Quiz />} />    {/* 👈 Quiz route */}
+        <Route path="/talentine" element={<talentine />} />    {/* 👈 Quiz route */}
       </Routes>
       <ButtonGradient />
     </>
