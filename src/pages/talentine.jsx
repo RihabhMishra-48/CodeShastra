@@ -1,309 +1,173 @@
 import React, { useState } from "react";
 import Header from "../components/Header";
 
+const SCRIPT_URL =
+  "https://script.google.com/macros/s/AKfycbyGPmXPmyth9CohOyXEJYiIlhitLV2HG9kmaxErom4LEPJPY25vOQ0Wdlj0aGDLce4/exec";
+
 const TalentineDay = () => {
   const [type, setType] = useState("individual");
   const [teamSize, setTeamSize] = useState(2);
+  const [members, setMembers] = useState(["", "", ""]);
+  const [loading, setLoading] = useState(false);
+
+  const handleMemberChange = (index, value) => {
+    const updated = [...members];
+    updated[index] = value;
+    setMembers(updated);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    const payload = {
+      type,
+      leaderName: e.target.leaderName.value,
+      email: e.target.email.value,
+      college: e.target.college.value,
+      teamSize: type === "team" ? teamSize : "Individual",
+      members: type === "team" ? members.slice(0, teamSize - 1) : [],
+    };
+
+    try {
+      const res = await fetch(SCRIPT_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      const result = await res.json();
+
+      if (result.success) {
+        alert("Registration successful!");
+        e.target.reset();
+        setType("individual");
+        setTeamSize(2);
+        setMembers(["", "", ""]);
+      } else {
+        alert("Submission failed. Try again.");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Network error. Try again later.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
-     <div className="pt-[4.75rem] lg:pt-[5.25rem] overflow-hidden">
+    <>
       <Header />
 
-    <section className="hero">
-  <h1 className="hero-title">
-    Talentine Day <br />
-    <span>Online Hackathon</span>
-  </h1>
+      <section className="min-h-screen bg-gradient-to-b from-[#120018] to-black text-white px-6 py-20">
+        <div className="max-w-4xl mx-auto text-center mb-14">
+          <h1 className="text-5xl font-bold mb-4">
+            <span className="bg-gradient-to-r from-pink-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent">
+              Talentine Day
+            </span>
+          </h1>
+          <p className="text-lg text-gray-300">
+            Online Hackathon · Tech Treasure Hunt · Prompt Engineering Challenge
+          </p>
 
-  <p className="hero-subtitle">
-    Tech Treasure Hunt <span>×</span> Prompt Engineering Challenge
-  </p>
+          <div className="flex justify-center gap-8 mt-6 text-sm font-medium">
+            <span>🌐 Online Event</span>
+            <span>🏆 ₹15,000 Prize Pool</span>
+            <span>💸 No Registration Fee</span>
+          </div>
+        </div>
 
-  <div className="stats">
-    <div className="stat-card">🌐 <span>Online Event</span></div>
-    <div className="stat-card">🏆 <span>₹15,000 Prize Pool</span></div>
-    <div className="stat-card">💸 <span>No Registration Fee</span></div>
-  </div>
-</section>
+        <div className="max-w-xl mx-auto bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8">
+          <h2 className="text-2xl font-semibold mb-6 text-center">
+            Register Now
+          </h2>
 
+          <div className="flex gap-3 mb-6">
+            <button
+              type="button"
+              onClick={() => setType("individual")}
+              className={`flex-1 py-2 rounded-xl border ${
+                type === "individual"
+                  ? "bg-gradient-to-r from-purple-500 to-pink-500"
+                  : "border-purple-400"
+              }`}
+            >
+              Individual
+            </button>
+            <button
+              type="button"
+              onClick={() => setType("team")}
+              className={`flex-1 py-2 rounded-xl border ${
+                type === "team"
+                  ? "bg-gradient-to-r from-purple-500 to-pink-500"
+                  : "border-purple-400"
+              }`}
+            >
+              Team
+            </button>
+          </div>
 
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <input
+              name="leaderName"
+              placeholder="Leader / Participant Name"
+              required
+              className="w-full p-3 rounded-xl bg-black border border-white/10"
+            />
 
-      <section className="card neon">
-  <h2 className="card-title">Register Now</h2>
+            <input
+              type="email"
+              name="email"
+              placeholder="Email Address"
+              required
+              className="w-full p-3 rounded-xl bg-black border border-white/10"
+            />
 
-  <div className="toggle">
-    <button
-      className={`toggle-btn ${type === "individual" ? "active" : ""}`}
-      onClick={() => setType("individual")}
-    >
-      Individual
-    </button>
-    <button
-      className={`toggle-btn ${type === "team" ? "active" : ""}`}
-      onClick={() => setType("team")}
-    >
-      Team
-    </button>
-  </div>
+            <input
+              name="college"
+              placeholder="College / Organization"
+              required
+              className="w-full p-3 rounded-xl bg-black border border-white/10"
+            />
 
-  <form className="form">
-    <input placeholder="Full Name" required />
-    <input type="email" placeholder="Email" required />
-    <input placeholder="College / Organization" required />
+            {type === "team" && (
+              <>
+                <select
+                  value={teamSize}
+                  onChange={(e) => setTeamSize(Number(e.target.value))}
+                  className="w-full p-3 rounded-xl bg-black border border-white/10"
+                >
+                  <option value={2}>2 Members</option>
+                  <option value={3}>3 Members</option>
+                  <option value={4}>4 Members</option>
+                </select>
 
-    <button type="submit" className="primary glow">
-      Submit Registration 🚀
-    </button>
-  </form>
-</section>
+                {Array.from({ length: teamSize - 1 }).map((_, i) => (
+                  <input
+                    key={i}
+                    placeholder={`Member ${i + 2} Name`}
+                    value={members[i]}
+                    onChange={(e) =>
+                      handleMemberChange(i, e.target.value)
+                    }
+                    required
+                    className="w-full p-3 rounded-xl bg-black border border-white/10"
+                  />
+                ))}
+              </>
+            )}
 
-      <style>{`
-        body {
-          margin: 0;
-          background: radial-gradient(circle at top, #2b0f3f, #05010a);
-          color: white;
-          font-family: Inter, sans-serif;
-        }
-
-        .page {
-          min-height: 100vh;
-        }
-
-        .navbar {
-          display: flex;
-          justify-content: space-between;
-          padding: 20px 40px;
-          border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .logo {
-          font-weight: bold;
-          font-size: 20px;
-        }
-
-        .nav-actions button {
-          margin-left: 10px;
-        }
-
-        .outline {
-          background: transparent;
-          border: 1px solid #a855f7;
-          color: white;
-          padding: 8px 16px;
-          border-radius: 10px;
-          cursor: pointer;
-        }
-
-        .hero {
-          text-align: center;
-          padding: 80px 20px;
-        }
-
-        .hero h1 {
-          font-size: 48px;
-          line-height: 1.2;
-        }
-
-        .hero span {
-          background: linear-gradient(90deg, #f472b6, #a855f7, #22d3ee);
-          -webkit-background-clip: text;
-          color: transparent;
-        }
-
-        .stats {
-          display: flex;
-          justify-content: center;
-          gap: 30px;
-          margin-top: 30px;
-          font-weight: 500;
-        }
-
-        .card {
-          max-width: 520px;
-          margin: auto;
-          background: rgba(255,255,255,0.05);
-          border: 1px solid rgba(255,255,255,0.1);
-          border-radius: 20px;
-          padding: 30px;
-          backdrop-filter: blur(12px);
-        }
-
-        .toggle {
-          display: flex;
-          gap: 10px;
-          margin-bottom: 20px;
-        }
-
-        .toggle button {
-          flex: 1;
-          padding: 10px;
-          border-radius: 12px;
-          border: 1px solid #7c3aed;
-          background: transparent;
-          color: white;
-          cursor: pointer;
-        }
-
-        .toggle .active {
-          background: linear-gradient(90deg, #7c3aed, #ec4899);
-        }
-
-        .form {
-          display: flex;
-          flex-direction: column;
-          gap: 12px;
-        }
-
-        .form input,
-        .form select {
-          padding: 12px;
-          border-radius: 10px;
-          border: none;
-          background: #0f172a;
-          color: white;
-        }
-
-        .primary {
-          margin-top: 10px;
-          padding: 14px;
-          border-radius: 14px;
-          border: none;
-          font-weight: bold;
-          background: linear-gradient(90deg, #22d3ee, #a855f7, #ec4899);
-          color: black;
-          cursor: pointer;
-          
-        }
-        /* Card Glow */
-.neon {
-  box-shadow:
-    0 0 40px rgba(168, 85, 247, 0.25),
-    inset 0 0 30px rgba(255, 255, 255, 0.04);
-}
-
-/* Card title */
-.card-title {
-  font-size: 26px;
-  font-weight: 600;
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-/* Toggle buttons */
-.toggle-btn {
-  flex: 1;
-  padding: 12px;
-  border-radius: 14px;
-  background: transparent;
-  border: 1px solid rgba(255,255,255,0.15);
-  color: #e5e7eb;
-  font-size: 16px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.toggle-btn:hover {
-  background: rgba(255,255,255,0.05);
-}
-
-.toggle-btn.active {
-  background: linear-gradient(135deg, #8b5cf6, #ec4899);
-  box-shadow: 0 0 20px rgba(236,72,153,0.6);
-  color: white;
-}
-
-/* Inputs */
-.form input {
-  background: rgba(15, 23, 42, 0.85);
-  border: 1px solid rgba(255,255,255,0.08);
-  font-size: 15px;
-}
-
-.form input:focus {
-  outline: none;
-  border-color: #a855f7;
-  box-shadow: 0 0 12px rgba(168,85,247,0.5);
-}
-
-/* Primary button glow */
-.glow {
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.glow:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 0 25px rgba(34,211,238,0.7);
-}
-
-        .hero h1::after {
-  content: "";
-  display: block;
-  width: 140px;
-  height: 4px;
-  margin: 16px auto 0;
-  background: linear-gradient(90deg, #22d3ee, #a855f7, #ec4899);
-  border-radius: 10px;
-}
-.hero {
-  text-align: center;
-  padding: 90px 20px 60px;
-}
-
-.hero-title {
-  font-size: 52px;
-  line-height: 1.15;
-  font-weight: 700;
-}
-
-.hero-title span {
-  background: linear-gradient(90deg, #22d3ee, #a855f7, #ec4899);
-  -webkit-background-clip: text;
-  color: transparent;
-}
-
-.hero-subtitle {
-  margin-top: 20px;
-  font-size: 18px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  opacity: 0.85;
-}
-
-.hero-desc {
-  margin-top: 8px;
-  font-size: 20px;
-  font-weight: 500;
-  opacity: 0.95;
-}
-
-.hero-desc span {
-  color: #a855f7;
-  padding: 0 6px;
-}
-
-.stats {
-  margin-top: 40px;
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  flex-wrap: wrap;
-}
-
-.stat-card {
-  padding: 12px 22px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(8px);
-  font-size: 15px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-
-      `}</style>
-    </div>
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full py-3 mt-4 rounded-xl font-semibold bg-gradient-to-r from-cyan-400 to-purple-500 text-black"
+            >
+              {loading ? "Submitting..." : "Submit Registration"}
+            </button>
+          </form>
+        </div>
+      </section>
+    </>
   );
 };
 
