@@ -30,55 +30,34 @@ const TalentineDay = () => {
         </div>
       </section>
 
-      <section className="card">
-        <h2>Register Now</h2>
+      <section className="card neon">
+  <h2 className="card-title">Register Now</h2>
 
-        <div className="toggle">
-          <button
-            className={type === "individual" ? "active" : ""}
-            onClick={() => setType("individual")}
-          >
-            Individual
-          </button>
-          <button
-            className={type === "team" ? "active" : ""}
-            onClick={() => setType("team")}
-          >
-            Team
-          </button>
-        </div>
+  <div className="toggle">
+    <button
+      className={`toggle-btn ${type === "individual" ? "active" : ""}`}
+      onClick={() => setType("individual")}
+    >
+      Individual
+    </button>
+    <button
+      className={`toggle-btn ${type === "team" ? "active" : ""}`}
+      onClick={() => setType("team")}
+    >
+      Team
+    </button>
+  </div>
 
-        <form className="form">
-          <input placeholder="Full Name" required />
-          <input type="email" placeholder="Email" required />
-          <input placeholder="College / Organization" required />
+  <form className="form">
+    <input placeholder="Full Name" required />
+    <input type="email" placeholder="Email" required />
+    <input placeholder="College / Organization" required />
 
-          {type === "team" && (
-            <>
-              <select
-                value={teamSize}
-                onChange={(e) => setTeamSize(Number(e.target.value))}
-              >
-                <option value={2}>2 Members</option>
-                <option value={3}>3 Members</option>
-                <option value={4}>4 Members</option>
-              </select>
-
-              {[...Array(teamSize)].map((_, i) => (
-                <input
-                  key={i}
-                  placeholder={`Member ${i + 1} Name`}
-                  required
-                />
-              ))}
-            </>
-          )}
-
-          <button type="submit" className="primary">
-            Submit Registration 🚀
-          </button>
-        </form>
-      </section>
+    <button type="submit" className="primary glow">
+      Submit Registration 🚀
+    </button>
+  </form>
+</section>
 
       <style>{`
         body {
