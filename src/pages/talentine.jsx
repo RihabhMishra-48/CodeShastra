@@ -14,21 +14,33 @@ const TalentineDay = () => {
         </div>
       </nav>
 
-      <section className="hero">
-        <h1>
-          Discover New Horizons in <br /> Tech with <span>CodeShastra</span>
-        </h1>
-        <p>
-          Talentine Day – Online Hackathon <br />
-          Tech Treasure Hunt + Prompt Engineering Challenge
-        </p>
+     <section className="hero">
+  <h1 className="hero-title">
+    Discover New Horizons in <br />
+    <span>Tech with CodeShastra</span>
+  </h1>
 
-        <div className="stats">
-          <div>🌐 Online Event</div>
-          <div>🏆 ₹15,000 Prize Pool</div>
-          <div>💸 No Registration Fee</div>
-        </div>
-      </section>
+  <p className="hero-subtitle">
+    Talentine Day — Online Hackathon
+  </p>
+
+  <p className="hero-desc">
+    Tech Treasure Hunt <span>×</span> Prompt Engineering Challenge
+  </p>
+
+  <div className="stats">
+    <div className="stat-card">
+      🌐 <span>Online Event</span>
+    </div>
+    <div className="stat-card">
+      🏆 <span>₹15,000 Prize Pool</span>
+    </div>
+    <div className="stat-card">
+      💸 <span>No Registration Fee</span>
+    </div>
+  </div>
+</section>
+
 
       <section className="card neon">
   <h2 className="card-title">Register Now</h2>
@@ -174,7 +186,136 @@ const TalentineDay = () => {
           background: linear-gradient(90deg, #22d3ee, #a855f7, #ec4899);
           color: black;
           cursor: pointer;
+          
         }
+        /* Card Glow */
+.neon {
+  box-shadow:
+    0 0 40px rgba(168, 85, 247, 0.25),
+    inset 0 0 30px rgba(255, 255, 255, 0.04);
+}
+
+/* Card title */
+.card-title {
+  font-size: 26px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Toggle buttons */
+.toggle-btn {
+  flex: 1;
+  padding: 12px;
+  border-radius: 14px;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.15);
+  color: #e5e7eb;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.toggle-btn:hover {
+  background: rgba(255,255,255,0.05);
+}
+
+.toggle-btn.active {
+  background: linear-gradient(135deg, #8b5cf6, #ec4899);
+  box-shadow: 0 0 20px rgba(236,72,153,0.6);
+  color: white;
+}
+
+/* Inputs */
+.form input {
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(255,255,255,0.08);
+  font-size: 15px;
+}
+
+.form input:focus {
+  outline: none;
+  border-color: #a855f7;
+  box-shadow: 0 0 12px rgba(168,85,247,0.5);
+}
+
+/* Primary button glow */
+.glow {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.glow:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 25px rgba(34,211,238,0.7);
+}
+
+        .hero h1::after {
+  content: "";
+  display: block;
+  width: 140px;
+  height: 4px;
+  margin: 16px auto 0;
+  background: linear-gradient(90deg, #22d3ee, #a855f7, #ec4899);
+  border-radius: 10px;
+}
+.hero {
+  text-align: center;
+  padding: 90px 20px 60px;
+}
+
+.hero-title {
+  font-size: 52px;
+  line-height: 1.15;
+  font-weight: 700;
+}
+
+.hero-title span {
+  background: linear-gradient(90deg, #22d3ee, #a855f7, #ec4899);
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.hero-subtitle {
+  margin-top: 20px;
+  font-size: 18px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+.hero-desc {
+  margin-top: 8px;
+  font-size: 20px;
+  font-weight: 500;
+  opacity: 0.95;
+}
+
+.hero-desc span {
+  color: #a855f7;
+  padding: 0 6px;
+}
+
+.stats {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.stat-card {
+  padding: 12px 22px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(8px);
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+
       `}</style>
     </div>
   );
