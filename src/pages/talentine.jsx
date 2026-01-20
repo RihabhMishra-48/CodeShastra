@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Header from "../components/Header";
 
 const SCRIPT_URL =
-  "https://script.google.com/macros/s/AKfycbyGPmXPmyth9CohOyXEJYiIlhitLV2HG9kmaxErom4LEPJPY25vOQ0Wdlj0aGDLce4/exec";
+  "https://script.google.com/macros/s/AKfycbynom3VwBx-AERdyDQxOKzwfqbvR3KYYRxxlvHO5CL-OgR52SwhA5dZLnmHgfYGMPDfvQ/exec";
 
 const TalentineDay = () => {
   const [type, setType] = useState("individual");
@@ -36,17 +36,18 @@ const TalentineDay = () => {
         body: JSON.stringify(payload),
       });
 
-      const result = await res.json();
+      const text = await res.text();
 
-      if (result.success) {
-        alert("Registration successful!");
-        e.target.reset();
-        setType("individual");
-        setTeamSize(2);
-        setMembers(["", "", ""]);
-      } else {
-        alert("Submission failed. Try again.");
-      }
+if (text === "SUCCESS") {
+  alert("Registration successful!");
+  e.target.reset();
+  setType("individual");
+  setTeamSize(2);
+  setMembers(["", "", ""]);
+} else {
+  alert("Submission failed.");
+}
+
     } catch (err) {
       console.error(err);
       alert("Network error. Try again later.");
