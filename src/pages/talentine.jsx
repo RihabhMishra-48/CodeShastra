@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Header from "../components/Header";
 
 const SCRIPT_URL =
-  "https://script.google.com/macros/s/AKfycbxn_lE54lBizAA6SE2MjUZyH4uVN09ERCC_iq9wO6pcp9SJZIrdrvsD3DPVV221f1GZRw/exec";
+  "PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL_HERE";
 
 const TalentineDay = () => {
   const [type, setType] = useState("individual");
@@ -32,25 +32,23 @@ const TalentineDay = () => {
     try {
       const res = await fetch(SCRIPT_URL, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
 
-      const text = await res.text();
+      const data = await res.json();
 
-if (text === "SUCCESS") {
-  alert("Registration successful!");
-  e.target.reset();
-  setType("individual");
-  setTeamSize(2);
-  setMembers(["", "", ""]);
-} else {
-  alert("Submission failed.");
-}
-
+      if (data.success) {
+        alert("🎉 Registration successful!");
+        e.target.reset();
+        setType("individual");
+        setTeamSize(2);
+        setMembers(["", "", ""]);
+      } else {
+        alert("❌ Submission failed");
+      }
     } catch (err) {
       console.error(err);
-      alert("Network error. Try again later.");
+      alert("❌ Network error. Try again later.");
     } finally {
       setLoading(false);
     }
@@ -70,12 +68,6 @@ if (text === "SUCCESS") {
           <p className="text-lg text-gray-300">
             Online Hackathon · Tech Treasure Hunt · Prompt Engineering Challenge
           </p>
-
-          <div className="flex justify-center gap-8 mt-6 text-sm font-medium">
-            <span>🌐 Online Event</span>
-            <span>🏆 ₹15,000 Prize Pool</span>
-            <span>💸 No Registration Fee</span>
-          </div>
         </div>
 
         <div className="max-w-xl mx-auto bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8">
@@ -109,48 +101,30 @@ if (text === "SUCCESS") {
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
-            <input
-              name="leaderName"
-              placeholder="Leader / Participant Name"
-              required
-              className="w-full p-3 rounded-xl bg-black border border-white/10"
-            />
+            <input name="leaderName" required placeholder="Leader / Participant Name"
+              className="w-full p-3 rounded-xl bg-black border border-white/10" />
 
-            <input
-              type="email"
-              name="email"
-              placeholder="Email Address"
-              required
-              className="w-full p-3 rounded-xl bg-black border border-white/10"
-            />
+            <input type="email" name="email" required placeholder="Email Address"
+              className="w-full p-3 rounded-xl bg-black border border-white/10" />
 
-            <input
-              name="college"
-              placeholder="College / Organization"
-              required
-              className="w-full p-3 rounded-xl bg-black border border-white/10"
-            />
+            <input name="college" required placeholder="College / Organization"
+              className="w-full p-3 rounded-xl bg-black border border-white/10" />
 
             {type === "team" && (
               <>
-                <select
-                  value={teamSize}
+                <select value={teamSize}
                   onChange={(e) => setTeamSize(Number(e.target.value))}
-                  className="w-full p-3 rounded-xl bg-black border border-white/10"
-                >
+                  className="w-full p-3 rounded-xl bg-black border border-white/10">
                   <option value={2}>2 Members</option>
                   <option value={3}>3 Members</option>
                   <option value={4}>4 Members</option>
                 </select>
 
                 {Array.from({ length: teamSize - 1 }).map((_, i) => (
-                  <input
-                    key={i}
+                  <input key={i}
                     placeholder={`Member ${i + 2} Name`}
                     value={members[i]}
-                    onChange={(e) =>
-                      handleMemberChange(i, e.target.value)
-                    }
+                    onChange={(e) => handleMemberChange(i, e.target.value)}
                     required
                     className="w-full p-3 rounded-xl bg-black border border-white/10"
                   />
@@ -158,11 +132,8 @@ if (text === "SUCCESS") {
               </>
             )}
 
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full py-3 mt-4 rounded-xl font-semibold bg-gradient-to-r from-cyan-400 to-purple-500 text-black"
-            >
+            <button type="submit" disabled={loading}
+              className="w-full py-3 rounded-xl font-semibold bg-gradient-to-r from-cyan-400 to-purple-500 text-black">
               {loading ? "Submitting..." : "Submit Registration"}
             </button>
           </form>
