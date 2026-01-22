@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Header from "../components/Header";
 
 const SCRIPT_URL =
-  "PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL_HERE";
+  "https://script.google.com/macros/s/AKfycbx32yrEgz9fY_UpyKDA0Ys6IqRV1xBJ4juwPe-U1PBDzndphbyago-i0_swjHvwk_7a/exec";
 
 const TalentineDay = () => {
   const [type, setType] = useState("individual");
