@@ -16,43 +16,39 @@ const TalentineDay = () => {
     setMembers(updated);
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
+  const handleSubmit = (e) => {
+  e.preventDefault();
+  setLoading(true);
 
-    const payload = {
-      type,
-      leaderName: e.target.leaderName.value,
-      email: e.target.email.value,
-      college: e.target.college.value,
-      teamSize: type === "team" ? teamSize : "Individual",
-      members: type === "team" ? members.slice(0, teamSize - 1) : [],
-    };
+  const formData = new FormData();
 
-    try {
-      const res = await fetch(SCRIPT_URL, {
-        method: "POST",
-        body: JSON.stringify(payload),
-      });
+  formData.append("type", type);
+  formData.append("leaderName", e.target.leaderName.value);
+  formData.append("email", e.target.email.value);
+  formData.append("college", e.target.college.value);
+  formData.append(
+    "teamSize",
+    type === "team" ? teamSize : "Individual"
+  );
+  formData.append(
+    "members",
+    type === "team" ? members.slice(0, teamSize - 1).join(", ") : ""
+  );
 
-      const data = await res.json();
+  fetch(SCRIPT_URL, {
+    method: "POST",
+    body: formData,
+    mode: "no-cors", // 🔥 MOST IMPORTANT
+  });
 
-      if (data.success) {
-        alert("🎉 Registration successful!");
-        e.target.reset();
-        setType("individual");
-        setTeamSize(2);
-        setMembers(["", "", ""]);
-      } else {
-        alert("❌ Submission failed");
-      }
-    } catch (err) {
-      console.error(err);
-      alert("❌ Network error. Try again later.");
-    } finally {
-      setLoading(false);
-    }
-  };
+  alert("🎉 Registration successful!");
+  e.target.reset();
+  setType("individual");
+  setTeamSize(2);
+  setMembers(["", "", ""]);
+  setLoading(false);
+};
+
 
   return (
     <>
