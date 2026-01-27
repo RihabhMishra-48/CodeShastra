@@ -248,9 +248,10 @@ const Talentine = () => {
               {type === "team" && (
                 <input
                   className="w-full p-3 rounded-xl bg-black border border-white/10 text-white"
-                  placeholder="Team Name (optional)"
+                  placeholder="Team Name "
                   value={teamName}
                   onChange={(e) => setTeamName(e.target.value)}
+                  required
                 />
               )}
 
