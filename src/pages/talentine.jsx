@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import Header from "../components/Header";
 
 const SCRIPT_URL =
-  "https://script.google.com/macros/s/AKfycbwhmiHH86wsGVHcq2y2O3FbA557nohX6WtEIbQB1i7SnVzOJTfba7fFD3W06NQ-i8g6/exec";
+  "https://script.google.com/macros/s/AKfycbx-eT_vWdtYT6QZGUvbai66v944w79p-5QPIvWQ8V4a_yJvGn8tzzHMEgsOIUzWQ-Lp/exec";
 
 const Talentine = () => {
   // Participation type: 'individual' or 'team'
