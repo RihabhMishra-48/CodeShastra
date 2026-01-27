@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Header from "../components/Header";
 
 const SCRIPT_URL =
-  "https://script.google.com/macros/s/AKfycbwOrsCBouM5oWYXjNJNO1e2sa9N4rYFNR097WQO9kYvt1LxXPMaG2W9_-HoGRWbHwg/exec";
+  "https://script.google.com/macros/s/AKfycbxe9zgWLRM71Bdj34_nOaTPp-FvOEtbNFl03QJrpKXesEZjzMMLNJrjVi-rP0gTPpaL/exec";
 
 const TalentineDay = () => {
   const [type, setType] = useState("individual");
@@ -17,38 +17,38 @@ const TalentineDay = () => {
   };
 
   const handleSubmit = (e) => {
-  e.preventDefault();
-  setLoading(true);
+    e.preventDefault();
+    if (loading) return;
 
-  const formData = new FormData();
+    setLoading(true);
 
-  formData.append("type", type);
-  formData.append("leaderName", e.target.leaderName.value);
-  formData.append("email", e.target.email.value);
-  formData.append("college", e.target.college.value);
-  formData.append(
-    "teamSize",
-    type === "team" ? teamSize : "Individual"
-  );
-  formData.append(
-    "members",
-    type === "team" ? members.slice(0, teamSize - 1).join(", ") : ""
-  );
+    const formData = new FormData();
+    formData.append("type", type);
+    formData.append("leaderName", e.target.leaderName.value);
+    formData.append("email", e.target.email.value);
+    formData.append("college", e.target.college.value);
+    formData.append("teamSize", type === "team" ? teamSize : 1);
+    formData.append(
+      "members",
+      type === "team"
+        ? members.slice(0, teamSize - 1).join(", ")
+        : ""
+    );
 
-  fetch(SCRIPT_URL, {
-    method: "POST",
-    body: formData,
-    mode: "no-cors", // 🔥 MOST IMPORTANT
-  });
+    fetch(SCRIPT_URL, {
+      method: "POST",
+      body: formData,
+      mode: "no-cors",
+    });
 
-  alert("🎉 Registration successful!");
-  e.target.reset();
-  setType("individual");
-  setTeamSize(2);
-  setMembers(["", "", ""]);
-  setLoading(false);
-};
+    alert("🎉 Registration successful!");
 
+    e.target.reset();
+    setType("individual");
+    setTeamSize(2);
+    setMembers(["", "", ""]);
+    setLoading(false);
+  };
 
   return (
     <>
@@ -83,6 +83,7 @@ const TalentineDay = () => {
             >
               Individual
             </button>
+
             <button
               type="button"
               onClick={() => setType("team")}
@@ -97,39 +98,65 @@ const TalentineDay = () => {
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
-            <input name="leaderName" required placeholder="Leader / Participant Name"
-              className="w-full p-3 rounded-xl bg-black border border-white/10" />
+            <input
+              name="leaderName"
+              required
+              placeholder="Leader / Participant Name"
+              disabled={loading}
+              className="w-full p-3 rounded-xl bg-black border border-white/10"
+            />
 
-            <input type="email" name="email" required placeholder="Email Address"
-              className="w-full p-3 rounded-xl bg-black border border-white/10" />
+            <input
+              type="email"
+              name="email"
+              required
+              placeholder="Email Address"
+              disabled={loading}
+              className="w-full p-3 rounded-xl bg-black border border-white/10"
+            />
 
-            <input name="college" required placeholder="College / Organization"
-              className="w-full p-3 rounded-xl bg-black border border-white/10" />
+            <input
+              name="college"
+              required
+              placeholder="College / Organization"
+              disabled={loading}
+              className="w-full p-3 rounded-xl bg-black border border-white/10"
+            />
 
             {type === "team" && (
               <>
-                <select value={teamSize}
+                <select
+                  value={teamSize}
                   onChange={(e) => setTeamSize(Number(e.target.value))}
-                  className="w-full p-3 rounded-xl bg-black border border-white/10">
+                  disabled={loading}
+                  className="w-full p-3 rounded-xl bg-black border border-white/10"
+                >
                   <option value={2}>2 Members</option>
                   <option value={3}>3 Members</option>
                   <option value={4}>4 Members</option>
                 </select>
 
                 {Array.from({ length: teamSize - 1 }).map((_, i) => (
-                  <input key={i}
+                  <input
+                    key={i}
                     placeholder={`Member ${i + 2} Name`}
                     value={members[i]}
-                    onChange={(e) => handleMemberChange(i, e.target.value)}
+                    onChange={(e) =>
+                      handleMemberChange(i, e.target.value)
+                    }
                     required
+                    disabled={loading}
                     className="w-full p-3 rounded-xl bg-black border border-white/10"
                   />
                 ))}
               </>
             )}
 
-            <button type="submit" disabled={loading}
-              className="w-full py-3 rounded-xl font-semibold bg-gradient-to-r from-cyan-400 to-purple-500 text-black">
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full py-3 rounded-xl font-semibold bg-gradient-to-r from-cyan-400 to-purple-500 text-black"
+            >
               {loading ? "Submitting..." : "Submit Registration"}
             </button>
           </form>
