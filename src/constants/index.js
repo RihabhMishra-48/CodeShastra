@@ -59,7 +59,7 @@ export const navigation = [
   },
   {
     id: "4",
-    title: "TalentineDay",       
+    title: "Talentine",       
     url: "/talentine",        
   },
 ];
