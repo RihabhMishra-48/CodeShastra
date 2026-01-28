@@ -242,7 +242,7 @@ const TalentineDay = () => {
 
             {/* Screenshots */}
             <label className="text-sm text-gray-300">
-              Subscription Screenshot (with your id logo) (can be disqualified if not subscribed)
+              Subscription Screenshot (with your id logo ,  disqualified if not subscribed)
             </label>
             <input
               type="file"
