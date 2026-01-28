@@ -4,93 +4,83 @@ import Header from "../components/Header";
 const SCRIPT_URL =
   "https://script.google.com/macros/s/AKfycbwOrsCBouM5oWYXjNJNO1e2sa9N4rYFNR097WQO9kYvt1LxXPMaG2W9_-HoGRWbHwg/exec";
 
+const CHANNEL_URL =
+  "https://www.youtube.com/channel/UCFxy5bVaO8KzTIWc3u6QxIA";
+
 const TalentineDay = () => {
   const [type, setType] = useState("individual");
   const [teamSize, setTeamSize] = useState(2);
   const [members, setMembers] = useState(["", "", ""]);
   const [teamName, setTeamName] = useState("");
-  const [subscribed, setSubscribed] = useState(false);
+
+  const [leaderShot, setLeaderShot] = useState(null);
+  const [memberShots, setMemberShots] = useState([null, null, null]);
+
   const [loading, setLoading] = useState(false);
 
-  const handleMemberChange = (index, value) => {
-    const updated = [...members];
-    updated[index] = value;
-    setMembers(updated);
+  const handleMemberChange = (i, val) => {
+    const copy = [...members];
+    copy[i] = val;
+    setMembers(copy);
   };
 
-  const validate = (form) => {
-    if (!form.leaderName.value.trim()) {
-      alert("Please enter participant / leader name.");
-      return false;
-    }
-
-    if (!form.email.value.trim()) {
-      alert("Please enter email address.");
-      return false;
-    }
-
-    if (!form.college.value.trim()) {
-      alert("Please enter college / organization.");
-      return false;
-    }
-
-    if (type === "team") {
-      if (!teamName.trim()) {
-        alert("Team name is required.");
-        return false;
-      }
-
-      for (let i = 0; i < teamSize - 1; i++) {
-        if (!members[i]?.trim()) {
-          alert(`Please enter Member ${i + 2} name.`);
-          return false;
-        }
-      }
-    }
-
-    if (!subscribed) {
-      alert("Please subscribe to the YouTube channel to proceed.");
-      return false;
-    }
-
-    return true;
+  const handleMemberShot = (i, file) => {
+    const copy = [...memberShots];
+    copy[i] = file;
+    setMemberShots(copy);
   };
 
-  const handleSubmit = (e) => {
+  const allScreenshotsUploaded =
+    type === "individual"
+      ? leaderShot
+      : leaderShot &&
+        memberShots.slice(0, teamSize - 1).every(Boolean);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!validate(e.target)) return;
+
+    if (type === "team" && !teamName.trim()) {
+      alert("Team name is required.");
+      return;
+    }
+
+    if (!allScreenshotsUploaded) {
+      alert("Upload subscription screenshots for all participants.");
+      return;
+    }
 
     setLoading(true);
 
     const formData = new FormData();
     formData.append("type", type);
+    formData.append("teamName", type === "team" ? teamName : "Individual");
     formData.append("leaderName", e.target.leaderName.value);
     formData.append("email", e.target.email.value);
     formData.append("college", e.target.college.value);
-    formData.append("teamName", type === "team" ? teamName : "N/A");
-    formData.append(
-      "teamSize",
-      type === "team" ? teamSize : "Individual"
-    );
+    formData.append("teamSize", type === "team" ? teamSize : 1);
     formData.append(
       "members",
       type === "team" ? members.slice(0, teamSize - 1).join(", ") : ""
     );
-    formData.append("subscribed", subscribed ? "Yes" : "No");
 
-    fetch(SCRIPT_URL, {
+    // screenshots
+    formData.append("leaderScreenshot", leaderShot);
+    memberShots.slice(0, teamSize - 1).forEach((file, i) => {
+      formData.append(`member${i + 2}Screenshot`, file);
+    });
+
+    await fetch(SCRIPT_URL, {
       method: "POST",
       body: formData,
       mode: "no-cors",
     });
 
-    alert("🎉 Registration successful!");
-    e.target.reset();
-    setType("individual");
-    setTeamSize(2);
-    setMembers(["", "", ""]);
+    alert("🎉 Registration submitted successfully!");
+
     setTeamName("");
-    setSubscribed(false);
+    setMembers(["", "", ""]);
+    setLeaderShot(null);
+    setMemberShots([null, null, null]);
     setLoading(false);
   };
 
@@ -98,62 +88,40 @@ const TalentineDay = () => {
     <>
       <Header />
 
-      {/* Event Info */}
-      <section className="bg-gradient-to-b from-black to-[#120018] text-white px-6 pt-28 pb-16">
-        <div className="max-w-5xl mx-auto text-center space-y-6">
-          <h1 className="text-5xl md:text-6xl font-extrabold bg-gradient-to-r from-pink-400 via-purple-400 to-cyan-400 text-transparent bg-clip-text">
-            TALENTINE 2026
-          </h1>
-
-          <p className="text-lg text-gray-300">
-            Fall in Love with Your Talent ❤️
-          </p>
-
-          <div className="flex flex-wrap justify-center gap-4 text-sm md:text-base">
-            <span className="px-4 py-2 rounded-full bg-white/10">
-              ⏱ 24-Hour Online Contest
-            </span>
-            <span className="px-4 py-2 rounded-full bg-white/10">
-              📅 Feb 14 · 9 AM Onwards
-            </span>
-            <span className="px-4 py-2 rounded-full bg-white/10">
-              🎓 First-Year Students
-            </span>
-            <span className="px-4 py-2 rounded-full bg-white/10">
-              💰 ₹15,000 Prize Pool
-            </span>
-          </div>
-        </div>
+      <section className="bg-gradient-to-b from-black to-[#120018] text-white px-6 pt-28 pb-14 text-center">
+        <h1 className="text-6xl font-extrabold bg-gradient-to-r from-pink-400 via-purple-400 to-cyan-400 text-transparent bg-clip-text">
+          TALENTINE 2026
+        </h1>
+        <p className="text-gray-300 mt-3">
+          24-hour online challenge · Final prizes ₹15,000
+        </p>
       </section>
 
-      {/* Registration */}
       <section className="bg-black text-white px-6 py-20">
-        <div className="max-w-xl mx-auto bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8">
-          <h2 className="text-2xl font-semibold mb-6 text-center">
-            Register Now
+        <div className="max-w-xl mx-auto bg-white/5 border border-white/10 rounded-2xl p-8">
+          <h2 className="text-2xl font-semibold text-center mb-6">
+            Registration
           </h2>
 
-          {/* Type Toggle */}
           <div className="flex gap-3 mb-6">
             <button
               type="button"
               onClick={() => setType("individual")}
-              className={`flex-1 py-2 rounded-xl border ${
+              className={`flex-1 py-2 rounded-xl ${
                 type === "individual"
                   ? "bg-gradient-to-r from-purple-500 to-pink-500"
-                  : "border-purple-400"
+                  : "bg-white/10"
               }`}
             >
               Individual
             </button>
-
             <button
               type="button"
               onClick={() => setType("team")}
-              className={`flex-1 py-2 rounded-xl border ${
+              className={`flex-1 py-2 rounded-xl ${
                 type === "team"
                   ? "bg-gradient-to-r from-purple-500 to-pink-500"
-                  : "border-purple-400"
+                  : "bg-white/10"
               }`}
             >
               Team
@@ -172,23 +140,23 @@ const TalentineDay = () => {
               type="email"
               name="email"
               required
-              placeholder="Email Address"
+              placeholder="Email"
               className="w-full p-3 rounded-xl bg-black border border-white/10"
             />
 
             <input
               name="college"
               required
-              placeholder="College / Organization"
+              placeholder="College"
               className="w-full p-3 rounded-xl bg-black border border-white/10"
             />
 
             {type === "team" && (
               <>
                 <input
+                  required
                   value={teamName}
                   onChange={(e) => setTeamName(e.target.value)}
-                  required
                   placeholder="Team Name"
                   className="w-full p-3 rounded-xl bg-black border border-white/10"
                 />
@@ -202,64 +170,78 @@ const TalentineDay = () => {
                   <option value={3}>3 Members</option>
                   <option value={4}>4 Members</option>
                 </select>
+              </>
+            )}
 
-                {Array.from({ length: teamSize - 1 }).map((_, i) => (
+            {/* Leader Screenshot */}
+            <div>
+              <label className="text-sm text-gray-300">
+                Leader Subscription Screenshot (must show channel logo)
+              </label>
+              <input
+                type="file"
+                accept="image/*"
+                required
+                onChange={(e) => setLeaderShot(e.target.files[0])}
+                className="w-full mt-1"
+              />
+            </div>
+
+            {/* Team Member Screenshots */}
+            {type === "team" &&
+              members.slice(0, teamSize - 1).map((_, i) => (
+                <div key={i} className="space-y-2">
                   <input
-                    key={i}
+                    required
                     placeholder={`Member ${i + 2} Name`}
                     value={members[i]}
                     onChange={(e) =>
                       handleMemberChange(i, e.target.value)
                     }
-                    required
                     className="w-full p-3 rounded-xl bg-black border border-white/10"
                   />
-                ))}
-              </>
-            )}
 
-            {/* YouTube Subscription */}
-            <div className="p-4 rounded-xl bg-white/5 border border-white/10">
-              <p className="text-sm text-gray-300 mb-3 text-center">
-                🔔 Mandatory: Subscribe to our YouTube channel
-              </p>
-
-              <div className="flex flex-col items-center gap-3">
-                <a
-                  href="https://www.youtube.com/channel/UCFxy5bVaO8KzTIWc3u6QxIA"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-5 py-2 rounded-full font-semibold bg-red-600 hover:bg-red-700"
-                >
-                  Subscribe on YouTube
-                </a>
-
-                <label className="flex items-center gap-2 text-sm cursor-pointer">
+                  <label className="text-sm text-gray-300">
+                    Member {i + 2} Subscription Screenshot (with logo)
+                  </label>
                   <input
-                    type="checkbox"
-                    checked={subscribed}
-                    onChange={(e) => setSubscribed(e.target.checked)}
-                    className="accent-pink-500 w-4 h-4"
+                    type="file"
+                    accept="image/*"
+                    required
+                    onChange={(e) =>
+                      handleMemberShot(i, e.target.files[0])
+                    }
                   />
-                  I have subscribed to the channel
-                </label>
-              </div>
+                </div>
+              ))}
+
+            <div className="flex gap-3">
+              <a
+                href={CHANNEL_URL}
+                target="_blank"
+                rel="noreferrer"
+                className="flex-1 text-center py-2 rounded-xl bg-red-600 font-semibold"
+              >
+                Subscribe
+              </a>
+
+              <button
+                type="button"
+                onClick={() =>
+                  navigator.clipboard.writeText(CHANNEL_URL)
+                }
+                className="flex-1 py-2 rounded-xl bg-white/10"
+              >
+                Share Link
+              </button>
             </div>
 
             <button
+              disabled={loading}
               type="submit"
-              disabled={loading || !subscribed}
-              className={`w-full py-3 rounded-xl font-semibold text-black ${
-                loading || !subscribed
-                  ? "bg-gray-400 cursor-not-allowed"
-                  : "bg-gradient-to-r from-yellow-300 to-pink-400"
-              }`}
+              className="w-full py-3 rounded-xl font-semibold bg-gradient-to-r from-yellow-300 to-pink-400 text-black"
             >
-              {loading
-                ? "Submitting..."
-                : type === "team"
-                ? "Register Team"
-                : "Register Individual"}
+              {loading ? "Submitting..." : "Submit Registration"}
             </button>
           </form>
         </div>
