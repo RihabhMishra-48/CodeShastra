@@ -111,7 +111,7 @@ const TalentineDay = () => {
 
         <div className="mt-6 flex flex-wrap justify-center gap-3">
           <span className="px-4 py-2 rounded-full bg-white/10">👥 Teams 2–4 / Individual</span>
-          <span className="px-4 py-2 rounded-full bg-white/10">🎓 First-Year Only</span>
+          <span className="px-4 py-2 rounded-full bg-white/10">🎓 Open to all</span>
           <span className="px-4 py-2 rounded-full bg-white/10">🏆 ₹15,000 Prize Pool</span>
         </div>
       </section>
