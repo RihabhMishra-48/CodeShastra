@@ -50,7 +50,7 @@ const CWorkshop = () => {
       <Header />
 
       {/* Automatic spacing below fixed header */}
-      <div className="pt-14 sm:pt:10">
+      <div className="pt-114 sm:pt:110">
 
         {/* HERO */}
         <section className="bg-gradient-to-b from-black to-[#120018] text-white px-4 sm:px-6 pb-14 text-center">
