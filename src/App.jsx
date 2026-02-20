@@ -9,7 +9,7 @@ import Hero from "./components/Hero";
 import Pricing from "./components/Pricing";
 import Roadmap from "./components/Roadmap";
 import Services from "./components/Services";
-import TalentineDay from "./pages/talentine"; // ✅ correct import
+import TalentineDay from "./pages/cworkshop"; // ✅ correct import
 
 // Home Page component
 const Home = () => {
@@ -32,7 +32,7 @@ const App = () => {
     <>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/talentine" element={<TalentineDay />} /> {/* ✅ FIX */}
+        <Route path="/cworkshop" element={<CWorkshop/>} /> {/* ✅ FIX */}
       </Routes>
       <ButtonGradient />
     </>
