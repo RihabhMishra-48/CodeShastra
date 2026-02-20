@@ -61,7 +61,7 @@ const CWorkshop = () => {
             💰 ₹250 Registration
           </span>
           <span className="px-4 py-2 rounded-full bg-white/10">
-            📅 3 Days (Dates: ________)
+            📅 3 Days (Dates: 4 Mar - 6 Mar )
           </span>
           <span className="px-4 py-2 rounded-full bg-white/10">
             ⏰ 9:00 PM – 10:30 PM
@@ -170,17 +170,6 @@ const CWorkshop = () => {
                 Subscribe Channel
               </a>
             </div>
-
-            <label className="text-sm text-gray-300">
-              Subscription Screenshot (ID logo visible — mandatory)
-            </label>
-
-            <input
-              type="file"
-              accept="image/*"
-              required
-              onChange={(e) => setScreenshot(e.target.files[0])}
-            />
 
             <button
               disabled={loading}
