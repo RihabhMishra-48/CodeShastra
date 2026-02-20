@@ -12,9 +12,16 @@ const PAYMENT_FORM_URL =
 
 const CWorkshop = () => {
   const [loading, setLoading] = useState(false);
+  const [paymentConfirmed, setPaymentConfirmed] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!paymentConfirmed) {
+      alert("Please confirm payment before submitting.");
+      return;
+    }
+
     setLoading(true);
 
     const formData = new FormData();
@@ -34,6 +41,7 @@ const CWorkshop = () => {
 
     alert("🎉 Registration submitted successfully!");
     e.target.reset();
+    setPaymentConfirmed(false);
     setLoading(false);
   };
 
@@ -41,12 +49,12 @@ const CWorkshop = () => {
     <>
       <Header />
 
-      {/* Prevent header overlap */}
-      <div className="pt-[120px]">
+      {/* Automatic spacing below fixed header */}
+      <div className="pt-24 sm:pt-28">
 
-        {/* HERO SECTION */}
+        {/* HERO */}
         <section className="bg-gradient-to-b from-black to-[#120018] text-white px-4 sm:px-6 pb-14 text-center">
-          <h1 className="text-3xl sm:text-4xl md:text-6xl font-extrabold bg-gradient-to-r from-yellow-300 via-orange-400 to-pink-500 bg-clip-text text-transparent leading-tight">
+          <h1 className="text-2xl sm:text-4xl md:text-6xl font-extrabold bg-gradient-to-r from-yellow-300 via-orange-400 to-pink-500 bg-clip-text text-transparent leading-tight">
             C PROGRAMMING WORKSHOP
           </h1>
 
@@ -65,11 +73,9 @@ const CWorkshop = () => {
               ⏰ 9:00 PM – 11:30 PM
             </span>
           </div>
-
-         
         </section>
 
-        {/* DETAILS SECTION */}
+        {/* DETAILS */}
         <section className="bg-[#120018] text-white px-4 sm:px-6 py-14">
           <div className="max-w-6xl mx-auto grid gap-6 sm:grid-cols-2 md:grid-cols-3">
             <DetailCard
@@ -91,7 +97,7 @@ const CWorkshop = () => {
           </p>
         </section>
 
-        {/* REGISTRATION SECTION */}
+        {/* REGISTRATION */}
         <section className="bg-black text-white px-4 sm:px-6 py-20">
           <div className="w-full max-w-md sm:max-w-lg mx-auto bg-white/5 border border-white/10 rounded-2xl p-6 sm:p-8">
             <h2 className="text-xl sm:text-2xl font-semibold text-center mb-6">
@@ -119,34 +125,52 @@ const CWorkshop = () => {
                 <option>4th Year</option>
               </select>
 
+              {/* Subscribe */}
               <a
                 href={CHANNEL_URL}
                 target="_blank"
                 rel="noreferrer"
-                className="block w-full text-center py-2 rounded-xl bg-red-600 font-semibold text-sm"
+                className="block w-full text-center py-3 rounded-xl bg-red-600 font-semibold text-sm"
               >
                 Subscribe Channel
               </a>
 
-               {/* Payment Button */}
-          <div className="mt-6">
-            <a
-              href={PAYMENT_FORM_URL}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-block px-6 py-3 rounded-xl font-semibold bg-green-500 hover:bg-green-600 transition"
-            >
-              Complete Payment
-            </a>
+              {/* Payment Button - FULL WIDTH */}
+              <a
+                href={PAYMENT_FORM_URL}
+                target="_blank"
+                rel="noreferrer"
+                className="block w-full text-center py-3 rounded-xl font-semibold bg-green-500 hover:bg-green-600 transition"
+              >
+                Complete Payment
+              </a>
 
-            <p className="text-xs sm:text-sm text-gray-400 mt-3 max-w-md mx-auto">
-              After completing form, fill the paymet form.(Use the same email for payment form)
-            </p>
-          </div>
+              <p className="text-xs text-gray-400 text-center">
+                Use the same email in payment form and registration form.
+              </p>
+
+              {/* Payment Confirmation Checkbox */}
+              <div className="flex items-start gap-2 text-sm">
+                <input
+                  type="checkbox"
+                  checked={paymentConfirmed}
+                  onChange={() => setPaymentConfirmed(!paymentConfirmed)}
+                  className="mt-1"
+                />
+                <label>
+                  I have completed the payment form.
+                </label>
+              </div>
+
+              {/* Submit */}
               <button
-                disabled={loading}
+                disabled={!paymentConfirmed || loading}
                 type="submit"
-                className="w-full py-3 rounded-xl font-semibold bg-gradient-to-r from-yellow-300 to-pink-400 text-black text-sm sm:text-base"
+                className={`w-full py-3 rounded-xl font-semibold text-black text-sm sm:text-base transition ${
+                  paymentConfirmed
+                    ? "bg-gradient-to-r from-yellow-300 to-pink-400"
+                    : "bg-gray-500 cursor-not-allowed"
+                }`}
               >
                 {loading ? "Submitting..." : "Submit Registration"}
               </button>
