@@ -7,6 +7,9 @@ const SCRIPT_URL =
 const CHANNEL_URL =
   "https://www.youtube.com/channel/UCFxy5bVaO8KzTIWc3u6QxIA";
 
+const PAYMENT_FORM_URL =
+  "https://docs.google.com/forms/d/e/1FAIpQLSeOnW4PpNIsu7QLr9b41Q5N8NtnrvFxdkfq4kvDY18Ln4IQsA/viewform";
+
 const CWorkshop = () => {
   const [loading, setLoading] = useState(false);
 
@@ -38,102 +41,120 @@ const CWorkshop = () => {
     <>
       <Header />
 
-      {/* HERO */}
-      <section className="bg-gradient-to-b from-black to-[#120018] text-white px-4 sm:px-6 pt-28 sm:pt-32 pb-12 text-center">
-        <h1 className="text-3xl sm:text-4xl md:text-6xl font-extrabold bg-gradient-to-r from-yellow-300 via-orange-400 to-pink-500 bg-clip-text text-transparent leading-tight">
-          C PROGRAMMING WORKSHOP
-        </h1>
+      {/* Prevent header overlap */}
+      <div className="pt-[95px]">
 
-        <p className="text-gray-300 mt-3 text-sm sm:text-base">
-          3-Day Intensive Training Program
-        </p>
+        {/* HERO SECTION */}
+        <section className="bg-gradient-to-b from-black to-[#120018] text-white px-4 sm:px-6 pb-14 text-center">
+          <h1 className="text-3xl sm:text-4xl md:text-6xl font-extrabold bg-gradient-to-r from-yellow-300 via-orange-400 to-pink-500 bg-clip-text text-transparent leading-tight">
+            C PROGRAMMING WORKSHOP
+          </h1>
 
-        <div className="mt-6 flex flex-wrap justify-center gap-2 sm:gap-3 text-xs sm:text-sm">
-          <span className="px-3 py-2 rounded-full bg-white/10">
-            💰 ₹250 Registration
-          </span>
-          <span className="px-3 py-2 rounded-full bg-white/10">
-            📅 4 Mar – 6 Mar
-          </span>
-          <span className="px-3 py-2 rounded-full bg-white/10">
-            ⏰ 9:00 PM – 11:30 PM
-          </span>
-        </div>
+          <p className="text-gray-300 mt-3 text-sm sm:text-base">
+            3-Day Intensive Training Program
+          </p>
 
-        <p className="text-xs sm:text-sm text-gray-400 mt-4 max-w-md mx-auto">
-          Payment details will be sent to your registered email soon.
-        </p>
-      </section>
+          <div className="mt-6 flex flex-wrap justify-center gap-2 sm:gap-3 text-xs sm:text-sm">
+            <span className="px-3 py-2 rounded-full bg-white/10">
+              💰 ₹250 Registration
+            </span>
+            <span className="px-3 py-2 rounded-full bg-white/10">
+              📅 4 Mar – 6 Mar
+            </span>
+            <span className="px-3 py-2 rounded-full bg-white/10">
+              ⏰ 9:00 PM – 11:30 PM
+            </span>
+          </div>
 
-      {/* DETAILS */}
-      <section className="bg-[#120018] text-white px-4 sm:px-6 py-12 sm:py-14">
-        <div className="max-w-6xl mx-auto grid gap-6 sm:grid-cols-2 md:grid-cols-3">
-          <DetailCard
-            title="📚 Structured Learning"
-            text="Beginner-friendly yet powerful C programming concepts."
-          />
-          <DetailCard
-            title="📝 Quiz & Practice"
-            text="Live quiz + exclusive practice problems."
-          />
-          <DetailCard
-            title="🤝 Mentorship Support"
-            text="Dedicated doubt-solving sessions."
-          />
-        </div>
-
-        <p className="text-center text-xs sm:text-sm text-gray-400 mt-8">
-          🚀 Not just basic YouTube content — practical, focused & exclusive.
-        </p>
-      </section>
-
-      {/* REGISTRATION */}
-      <section className="bg-black text-white px-4 sm:px-6 py-16 sm:py-20">
-        <div className="w-full max-w-md sm:max-w-lg mx-auto bg-white/5 border border-white/10 rounded-2xl p-6 sm:p-8">
-          <h2 className="text-xl sm:text-2xl font-semibold text-center mb-6">
-            Registration Form
-          </h2>
-
-          <form onSubmit={handleSubmit} className="space-y-4">
-
-            <Input name="name" placeholder="Full Name" />
-            <Input name="phone" placeholder="Phone Number" />
-            <Input name="email" type="email" placeholder="Email" />
-            <Input name="college" placeholder="College" />
-            <Input name="course" placeholder="Course" />
-            <Input name="section" placeholder="Section" />
-
-            <select
-              name="year"
-              required
-              className="w-full p-3 rounded-xl bg-black border border-white/10 text-sm"
-            >
-              <option value="">Select Year</option>
-              <option>1st Year</option>
-              <option>2nd Year</option>
-              <option>3rd Year</option>
-              <option>4th Year</option>
-            </select>
-
+          {/* Payment Button */}
+          <div className="mt-6">
             <a
-              href={CHANNEL_URL}
+              href={PAYMENT_FORM_URL}
               target="_blank"
               rel="noreferrer"
-              className="block w-full text-center py-2 rounded-xl bg-red-600 font-semibold text-sm"
+              className="inline-block px-6 py-3 rounded-xl font-semibold bg-green-500 hover:bg-green-600 transition"
             >
-              Subscribe Channel
+              Complete Payment
             </a>
 
-            <button
-              disabled={loading}
-              type="submit"
-              className="w-full py-3 rounded-xl font-semibold bg-gradient-to-r from-yellow-300 to-pink-400 text-black text-sm sm:text-base"
-            >
-              {loading ? "Submitting..." : "Submit Registration"}
-            </button>
-          </form>
-        </div>
-      </section>
+            <p className="text-xs sm:text-sm text-gray-400 mt-3 max-w-md mx-auto">
+              After completing payment, fill the registration form below.
+            </p>
+          </div>
+        </section>
+
+        {/* DETAILS SECTION */}
+        <section className="bg-[#120018] text-white px-4 sm:px-6 py-14">
+          <div className="max-w-6xl mx-auto grid gap-6 sm:grid-cols-2 md:grid-cols-3">
+            <DetailCard
+              title="📚 Structured Learning"
+              text="Beginner-friendly yet powerful C programming concepts."
+            />
+            <DetailCard
+              title="📝 Quiz & Practice"
+              text="Live quiz + exclusive practice problems."
+            />
+            <DetailCard
+              title="🤝 Mentorship Support"
+              text="Dedicated doubt-solving sessions."
+            />
+          </div>
+
+          <p className="text-center text-xs sm:text-sm text-gray-400 mt-8">
+            🚀 Practical, focused & exclusive training.
+          </p>
+        </section>
+
+        {/* REGISTRATION SECTION */}
+        <section className="bg-black text-white px-4 sm:px-6 py-20">
+          <div className="w-full max-w-md sm:max-w-lg mx-auto bg-white/5 border border-white/10 rounded-2xl p-6 sm:p-8">
+            <h2 className="text-xl sm:text-2xl font-semibold text-center mb-6">
+              Registration Form
+            </h2>
+
+            <form onSubmit={handleSubmit} className="space-y-4">
+
+              <Input name="name" placeholder="Full Name" />
+              <Input name="phone" placeholder="Phone Number" />
+              <Input name="email" type="email" placeholder="Email" />
+              <Input name="college" placeholder="College" />
+              <Input name="course" placeholder="Course" />
+              <Input name="section" placeholder="Section" />
+
+              <select
+                name="year"
+                required
+                className="w-full p-3 rounded-xl bg-black border border-white/10 text-sm"
+              >
+                <option value="">Select Year</option>
+                <option>1st Year</option>
+                <option>2nd Year</option>
+                <option>3rd Year</option>
+                <option>4th Year</option>
+              </select>
+
+              <a
+                href={CHANNEL_URL}
+                target="_blank"
+                rel="noreferrer"
+                className="block w-full text-center py-2 rounded-xl bg-red-600 font-semibold text-sm"
+              >
+                Subscribe Channel
+              </a>
+
+              <button
+                disabled={loading}
+                type="submit"
+                className="w-full py-3 rounded-xl font-semibold bg-gradient-to-r from-yellow-300 to-pink-400 text-black text-sm sm:text-base"
+              >
+                {loading ? "Submitting..." : "Submit Registration"}
+              </button>
+
+            </form>
+          </div>
+        </section>
+
+      </div>
     </>
   );
 };
