@@ -9,7 +9,7 @@ import Hero from "./components/Hero";
 import Pricing from "./components/Pricing";
 import Roadmap from "./components/Roadmap";
 import Services from "./components/Services";
-import TalentineDay from "./pages/cworkshop"; // ✅ correct import
+import TalentineDay from "./pages/CWorkshop"; // ✅ correct import
 
 // Home Page component
 const Home = () => {
