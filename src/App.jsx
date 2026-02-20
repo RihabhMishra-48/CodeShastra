@@ -32,7 +32,7 @@ const App = () => {
     <>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/cworkshop" element={<CWorkshop/>} /> {/* ✅ FIX */}
+        <Route path="/cworkshop" element={<CWorkshop />} /> {/* ✅ FIX */}
       </Routes>
       <ButtonGradient />
     </>
