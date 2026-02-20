@@ -64,7 +64,7 @@ const CWorkshop = () => {
 
           <div className="mt-6 flex flex-wrap justify-center gap-2 sm:gap-3 text-xs sm:text-sm">
             <span className="px-3 py-2 rounded-full bg-white/10">
-              💰 ₹250 Registration
+              💰 ₹200 Registration
             </span>
             <span className="px-3 py-2 rounded-full bg-white/10">
               📅 4 Mar – 6 Mar
@@ -93,7 +93,7 @@ const CWorkshop = () => {
           </div>
 
           <p className="text-center text-xs sm:text-sm text-gray-400 mt-8">
-            🚀 Practical, focused & exclusive training.
+            🚀Not just youtube stuff ! Its Practical, focused & exclusive training.
           </p>
         </section>
 
