@@ -42,7 +42,7 @@ const CWorkshop = () => {
       <Header />
 
       {/* Prevent header overlap */}
-      <div className="pt-[95px]">
+      <div className="pt-[120px]">
 
         {/* HERO SECTION */}
         <section className="bg-gradient-to-b from-black to-[#120018] text-white px-4 sm:px-6 pb-14 text-center">
@@ -140,7 +140,7 @@ const CWorkshop = () => {
             </a>
 
             <p className="text-xs sm:text-sm text-gray-400 mt-3 max-w-md mx-auto">
-              After completing form, fill the paymet form .
+              After completing form, fill the paymet form.(Use the same email for payment form)
             </p>
           </div>
               <button
