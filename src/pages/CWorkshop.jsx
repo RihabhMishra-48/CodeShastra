@@ -66,21 +66,7 @@ const CWorkshop = () => {
             </span>
           </div>
 
-          {/* Payment Button */}
-          <div className="mt-6">
-            <a
-              href={PAYMENT_FORM_URL}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-block px-6 py-3 rounded-xl font-semibold bg-green-500 hover:bg-green-600 transition"
-            >
-              Complete Payment
-            </a>
-
-            <p className="text-xs sm:text-sm text-gray-400 mt-3 max-w-md mx-auto">
-              After completing payment, fill the registration form below.
-            </p>
-          </div>
+         
         </section>
 
         {/* DETAILS SECTION */}
@@ -142,6 +128,21 @@ const CWorkshop = () => {
                 Subscribe Channel
               </a>
 
+               {/* Payment Button */}
+          <div className="mt-6">
+            <a
+              href={PAYMENT_FORM_URL}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-block px-6 py-3 rounded-xl font-semibold bg-green-500 hover:bg-green-600 transition"
+            >
+              Complete Payment
+            </a>
+
+            <p className="text-xs sm:text-sm text-gray-400 mt-3 max-w-md mx-auto">
+              After completing form, fill the paymet form .
+            </p>
+          </div>
               <button
                 disabled={loading}
                 type="submit"
